@@ -37,7 +37,7 @@ FACE_DETECTOR = cv.FaceDetectorYN.create(
 # MOUTH_HAAR = cv.Load(MOUTH_HAAR)
 
 # Screen settings
-SCREEN = [640, 360]
+SCREEN = [1200, 800]
 
 
 # def surface_to_string(surface):
@@ -62,7 +62,7 @@ def cvimage_grayscale(cv_image):
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
     return pygame.image.frombuffer(image.tobytes(), image.shape[1::-1],
-                                   "RGB")
+                                   "BGR")
 
 
 def detect_faces(cv_image):
