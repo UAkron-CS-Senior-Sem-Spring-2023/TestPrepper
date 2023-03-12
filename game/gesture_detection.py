@@ -32,6 +32,9 @@ if __name__ == "__main__":
             if not ret:
                 exit(-1)
 
+            cv.imshow('img', image)
+            cv.waitKey(1)
+
             mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=np.asarray(image))
             gesture_recognition_result = recognizer.recognize_for_video(mp_image, mp.Timestamp.from_seconds(time.time()).microseconds())
             # print(gesture_recognition_result)
@@ -42,5 +45,5 @@ if __name__ == "__main__":
                     # print(gesture[0].category_name)
                     if gesture[0].category_name == 'Pointing_Up':
                         print("You're pointing up! at ")
-                        annotated_image = mp_drawing.draw_landmarks(mp_image.numpy_view(), gesture_recognition_result)
-                        cv.imshow(cv.cvtColor(annotated_image, cv.COLOR_RGB2BGR))
+                        # annotated_image = mp_drawing.draw_landmarks(mp_image.numpy_view(), gesture_recognition_result)
+                        
