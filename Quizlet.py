@@ -11,28 +11,24 @@ endLoop = '1'
 if choice == '0':
 
     # Build database for definitions and terms
-    print("What is the chapter?")
-    chapterName = input()
-    definitionDB = sqlite3.connect(input + '.db')
+    chapterName = input("What is the chapter?" )
+    DBName = chapterName + ".db"
+    definitionDB = sqlite3.connect(DBName)
     DBCursor = definitionDB.cursor()
-    DBCursor.execute('CREATE TABLE ')
+    DBCursor.execute('CREATE TABLE ' + chapterName + '(Definition text, Term text)')
     # Loop the terms and definitions until everything is inserted
     while endLoop == '1':
-        fileChange = open("Term/" + chapterName + "Term.txt", "a")
         print("What's the term?")
         termInput = input()
-        fileChange.write(termInput + '$')
-        fileChange.close()
 
-        fileChange = open("Definition/" + chapterName + "Definition.txt", "a")
         print("What's the definition?")
-        termInput = input()
-        fileChange.write(termInput + '$')
-        fileChange.close()
+        definitionInput = input()
         
+        DBCursor.execute("INSERT INTO " + chapterName + " VALUES ('" + definitionInput + "', '" + termInput + "')")
+
         print("Done?\n1.Not yet\n2.Yes")
+        definitionDB.commit()
         endLoop = input()
-    fileChange.close()
 
 if choice == '1':
 
