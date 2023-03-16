@@ -1,1 +1,1 @@
-processes instructions$volatile memory for the CPU$
+Process instructions fed in by RAM$Hold prioritized data usually packed in the SSD$Largest source of internal storage, also the furthest from the CPU$powers all the computer components$Hardware to house all the components$calculates display for the computer$physical organization for the components$

@@ -66,10 +66,10 @@ if choice == '1':
         if not char:
             break
     file.close()
-
-    print("What is " + definitionList[random.randint(0,1)] + "?")
+    questionChoice = random.randint(0,len(definitionList) - 1)
+    print("What is " + definitionList[questionChoice] + "?")
     answer = input()
-    if termList.count(answer) <= 0:
+    if termList.count(answer) <= 0 and termList.count(answer) != questionChoice:
         print("Incorrect.")
     else:
         print("Correct!")
