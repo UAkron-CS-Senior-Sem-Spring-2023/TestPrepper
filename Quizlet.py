@@ -45,9 +45,12 @@ if choice == '1':
 
     # Insert guide into terms list and definitions list
     DBCursor.execute("SELECT Definition FROM " + chapterStudy)
-    definitionList = DBCursor.fetchall()
+    DBList = DBCursor.fetchall()
+    definitionList = [''.join(i) for i in DBList]
+
     DBCursor.execute("SELECT Term FROM " + chapterStudy)
-    termList = DBCursor.fetchall()
+    DBList = DBCursor.fetchall()
+    termList = [''.join(i) for i in DBList]
 
     # Question section
     questionChoice = random.randint(0,len(definitionList) - 1)
