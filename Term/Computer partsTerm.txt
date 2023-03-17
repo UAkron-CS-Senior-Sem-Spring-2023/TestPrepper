@@ -1,1 +1,0 @@
-CPU$RAM$SSD$PSU$motherboard$GPU$case$

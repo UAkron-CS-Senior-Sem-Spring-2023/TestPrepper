@@ -13,9 +13,10 @@ if choice == '0':
     # Build database for definitions and terms
     chapterName = input("What is the chapter?" )
     DBName = chapterName + ".db"
-    definitionDB = sqlite3.connect(DBName)
+    definitionDB = sqlite3.connect("Databases/" + DBName)
     DBCursor = definitionDB.cursor()
     DBCursor.execute('CREATE TABLE ' + chapterName + '(Definition text, Term text)')
+
     # Loop the terms and definitions until everything is inserted
     while endLoop == '1':
         print("What's the term?")
@@ -33,43 +34,24 @@ if choice == '0':
 if choice == '1':
 
     # Display list of guides available
-    path = "./Term"
+    path = "./Databases"
     dir_list = os.listdir(path)
-    cleanDir = [s.rstrip("Term.txt") for s in dir_list]
+    cleanDir = [subtract[:-3] for subtract in dir_list]
     print(cleanDir)
     chapterStudy = input()
+    DBName = chapterStudy + ".db"
+    definitionDB = sqlite3.connect("Databases/" + DBName)
+    DBCursor = definitionDB.cursor()
 
     # Insert guide into terms list and definitions list
-    file = open("Term/" + chapterStudy + "Term.txt", "r")
-    definitionList = []
-    termList = []
-    stringManipulate = ''
-    while 1:
-        char = file.read(1)
-        if char != '$':
-            stringManipulate += char
-        if char == '$':
-            termList.append(stringManipulate)
-            stringManipulate = ''
-        if not char:
-            break
-    file.close()
-
-    file = open("Definition/" + chapterStudy + "Definition.txt", "r")
-    while 1:
-        char = file.read(1)
-        if char != '$':
-            stringManipulate += char
-        if char == '$':
-            definitionList.append(stringManipulate)
-            stringManipulate = ''
-        if not char:
-            break
-    file.close()
+    DBCursor.execute("SELECT Definition FROM " + chapterStudy)
+    definitionList = DBCursor.fetchall()
+    DBCursor.execute("SELECT Term FROM " + chapterStudy)
+    termList = DBCursor.fetchall()
 
     # Question section
     questionChoice = random.randint(0,len(definitionList) - 1)
-    print("What is " + definitionList[questionChoice] + "?")
+    print("What is {}".format(definitionList[questionChoice]) + "?")
     answer = input()
     if termList.count(answer) <= 0 and termList.count(answer) != questionChoice:
         print("Incorrect.")
