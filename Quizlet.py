@@ -52,13 +52,16 @@ if choice == '1':
     DBList = DBCursor.fetchall()
     termList = [''.join(i) for i in DBList]
 
+    array=list(range(0,len(termList) + 0))
+    print(array)
+    random.shuffle(array)
     # Question section
-    for x in definitionList:
-        questionChoice = random.randint(0,len(definitionList) - 1)
-        print("What is {}".format(definitionList[questionChoice]) + "?")
+    for x in array:
+        questionChoice = termList[x]
+        print("What is {}".format(definitionList[x]) + "?")
         answer = input()
         try:
-            if termList.index(answer) == questionChoice:
+            if termList.index(answer) == termList.index(questionChoice):
                 print("Correct!")
             else:
                 print("Incorrect.")
