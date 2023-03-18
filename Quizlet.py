@@ -1,10 +1,14 @@
 import os
 import random
 import sqlite3
+import numpy as np
+import matplotlib.pyplot as plt
+
 # Guide to new guide or review
 print("Do you want to review a chapter or create a new review?\n"
         "0:Create a new chapter.\n"
-        "1:Review a chapter.")
+        "1:Review a chapter.\n"
+        "2:Export score.")
 choice = input()
 endLoop = '1'
 
@@ -55,6 +59,7 @@ if choice == '1':
     array=list(range(0,len(termList) + 0))
     print(array)
     random.shuffle(array)
+
     # Question section
     for x in array:
         questionChoice = termList[x]
@@ -67,4 +72,8 @@ if choice == '1':
                 print("Incorrect.")
         except ValueError as ve:
             print("Incorrect input.")
-            
+
+if choice == '2':
+    x = np.linspace(0, 20, 100)  # Create a list of evenly-spaced numbers over the range
+    plt.plot(x, np.sin(x))       # Plot the sine of each x point
+    plt.show()                   # Display the plot
