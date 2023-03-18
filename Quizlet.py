@@ -53,11 +53,15 @@ if choice == '1':
     termList = [''.join(i) for i in DBList]
 
     # Question section
-    for x in range(0,10):
+    for x in definitionList:
         questionChoice = random.randint(0,len(definitionList) - 1)
         print("What is {}".format(definitionList[questionChoice]) + "?")
         answer = input()
-        if termList.index(answer) == questionChoice:
-            print("Correct!")
-        else:
-            print("Incorrect.")
+        try:
+            if termList.index(answer) == questionChoice:
+                print("Correct!")
+            else:
+                print("Incorrect.")
+        except ValueError as ve:
+            print("Incorrect input.")
+            
