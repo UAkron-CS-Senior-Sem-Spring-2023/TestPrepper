@@ -3,6 +3,8 @@ import cv2
 
 from gesture_detection import GestureDetection
 
+clock = pygame.time.Clock()
+
 SCREEN = [640, 360]
 
 def cvimage_to_pygame(image):
@@ -17,7 +19,13 @@ if __name__ == "__main__":
     pygame.init()  # Initialize pygame
     detecter = GestureDetection(0)
 
-    while True:
+    game_exit = False
+
+    while not game_exit:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_exit = True
+
         image = detecter.getImage()
 
         result = detecter.doesImageContainGesture('Pointing_Up', image)
@@ -27,5 +35,8 @@ if __name__ == "__main__":
         screen.fill([0,0,0])
         screen.blit(cvimage_to_pygame(image), (0,0))
         pygame.display.update()
-
+        clock.tick(15)
+    
+    pygame.quit()
+    quit()
 
