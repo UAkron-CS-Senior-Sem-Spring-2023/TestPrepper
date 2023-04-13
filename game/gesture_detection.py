@@ -15,7 +15,7 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 
 MODEL = 'gesture_recognizer.task'
 MODEL_CONTENTS = open(MODEL, 'rb').read()
-FONT_COLOR = (255,255,255)
+FONT_COLOR = (0,0,0)
 POINTING_UP_QUOTE = "You're pointing up! At: "
 FONT = cv.FONT_HERSHEY_COMPLEX
 FONT_SCALE = 0.5
@@ -58,21 +58,39 @@ class GestureDetection():
             for i in range(len(gesture_recognition_result.gestures)):
                 if gesture_recognition_result.gestures[i][0].category_name == gesture:
                     # print("You're pointing up!")
-                    for mark in gesture_recognition_result.hand_landmarks[0]:
-                        x = int(mark.x * image.shape[1])
-                        y = int(mark.y * image.shape[0])
-                        # Annotate landmarks
-                        cv.circle(image, (x, y), 5, (0, 255, 0), -1)
+                    landmarks = gesture_recognition_result.hand_landmarks[0]
+                    # for mark in landmarks:
+                    #     x = int(mark.x * image.shape[1])
+                    #     y = int(mark.y * image.shape[0])
+                    #     # Annotate landmarks
+                    #     cv.circle(image, (x, y), 5, (0, 255, 0), -1)
 
-                        if top_finger_y > y:
-                            top_finger_y = y
-                            top_finger_x = x
+                    #     if top_finger_y > y:
+                    #         top_finger_y = y
+                    #         top_finger_x = x
 
-                    pointing_len = cv.getTextSize(POINTING_UP_QUOTE, FONT, FONT_SCALE, 1)
-                    cv.putText(image, POINTING_UP_QUOTE, (top_finger_x, top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
-                    cv.putText(image, str(top_finger_y), (top_finger_x+pointing_len[0][0], top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
-                return (image, (top_finger_x, top_finger_y))
+                    # pointing_len = cv.getTextSize(POINTING_UP_QUOTE, FONT, FONT_SCALE, 1)
+                    # cv.putText(image, POINTING_UP_QUOTE, (top_finger_x, top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
+                    # cv.putText(image, str(top_finger_y), (top_finger_x+pointing_len[0][0], top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
+                    return (image, (top_finger_x, top_finger_y, landmarks))
         return False
+    
+def drawMarksOnImage(image, top_finger_x, top_finger_y, landmarks):
+    for mark in landmarks:
+        x = int(mark.x * image.shape[1])
+        y = int(mark.y * image.shape[0])
+        # Annotate landmarks
+        cv.circle(image, (x, y), 5, (0, 255, 0), -1)
+
+        if top_finger_y > y:
+            top_finger_y = y
+            top_finger_x = x
+
+    pointing_len = cv.getTextSize(POINTING_UP_QUOTE, FONT, FONT_SCALE, 1)
+    cv.putText(image, POINTING_UP_QUOTE, (top_finger_x, top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
+    cv.putText(image, str(top_finger_y), (top_finger_x+pointing_len[0][0], top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
+
+    return image
 
 if __name__ == "__main__":
     cap = cv.VideoCapture(0)

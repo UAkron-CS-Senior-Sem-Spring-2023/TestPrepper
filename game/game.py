@@ -1,11 +1,16 @@
 import pygame
 import cv2
+import numpy as np
 
-from gesture_detection import GestureDetection
+from gesture_detection import GestureDetection, drawMarksOnImage
 
 clock = pygame.time.Clock()
 
-SCREEN = [640, 360]
+WIDTH = 600
+HEIGHT = 800
+WHITE = (255,255,255)
+BLACK = (0,0,0)
+SCREEN = [WIDTH, HEIGHT]
 
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
@@ -29,7 +34,12 @@ if __name__ == "__main__":
         image = detecter.getImage()
 
         result = detecter.doesImageContainGesture('Pointing_Up', image)
+
+        image = np.zeros([image.shape[0],image.shape[1],3],dtype=np.uint8)
+        image.fill(255)
+        
         if result != False:
+            image = drawMarksOnImage(image, result[1][0], result[1][1], result[1][2])
             print(result[1][1])
 
         screen.fill([0,0,0])
