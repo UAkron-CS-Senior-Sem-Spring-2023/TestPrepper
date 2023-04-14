@@ -59,25 +59,64 @@ if choice == '1':
     DBList = DBCursor.fetchall()
     termList = [''.join(i) for i in DBList]
 
-    # Develop quiz
-    array=list(range(0,len(termList) + 0))
-    random.shuffle(array)
-    DBCursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = 'Total'")
-    definitionDB.commit()
-    # Question section
-    for x in array:
-        questionChoice = termList[x]
-        print("What is {}".format(definitionList[x]) + "?")
-        answer = input()
-        try:
-            if termList.index(answer) == termList.index(questionChoice):
-                DBCursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = '" + answer + "';")
-                definitionDB.commit()
-                print("Correct!")
-            else:
-                print("Incorrect.")
-        except ValueError as ve:
-            print("Incorrect input.")
+    testChoice = input("What kind of test do you want?\nMultiple choice:1\nQuestion/Answer:2\n")
+    if testChoice == '1':
+        # Develop Multiple choice quiz
+        array=list(range(0,len(termList) + 0))
+        random.shuffle(array)
+        DBCursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = 'Total'")
+        definitionDB.commit()
+        # Question section
+        for x in array:
+            choicePicker = [termList[x],termList[random.choice(array)],termList[random.choice(array)],termList[random.choice(array)]]
+            while len(set(choicePicker)) != len(choicePicker):
+                 choicePicker = [termList[x],termList[random.choice(array)],termList[random.choice(array)],termList[random.choice(array)]]
+            random.shuffle(choicePicker)
+
+            questionChoice = termList[x]
+            print("What is {}".format(definitionList[x]) + "?")
+            print("A.{}".format(choicePicker[0]))
+            print("B.{}".format(choicePicker[1]))
+            print("C.{}".format(choicePicker[2]))
+            print("D.{}".format(choicePicker[3]))
+            answer = input()
+            if(answer == 'a' or answer == 'A' and choicePicker[0] == termList[x]):
+                answer = choicePicker[0]
+            if(answer == 'b' or answer == 'B' and choicePicker[1] == termList[x]):
+                answer = choicePicker[1]
+            if(answer == 'c' or answer == 'C' and choicePicker[2] == termList[x]):
+                answer = choicePicker[2]
+            if(answer == 'd' or answer == 'D' and choicePicker[3] == termList[x]):
+                answer = choicePicker[3]
+            try:
+                if termList.index(answer) == termList.index(questionChoice):
+                    DBCursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = '" + answer + "';")
+                    definitionDB.commit()
+                    print("Correct!")
+                else:
+                    print("Incorrect.")
+            except ValueError as ve:
+                print("Incorrect input.")
+    if testChoice == '2':
+        # Develop Q/A quiz
+        array=list(range(0,len(termList) + 0))
+        random.shuffle(array)
+        DBCursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = 'Total'")
+        definitionDB.commit()
+        # Question section
+        for x in array:
+            questionChoice = termList[x]
+            print("What is {}".format(definitionList[x]) + "?")
+            answer = input()
+            try:
+                if termList.index(answer) == termList.index(questionChoice):
+                    DBCursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = '" + answer + "';")
+                    definitionDB.commit()
+                    print("Correct!")
+                else:
+                    print("Incorrect.")
+            except ValueError as ve:
+                print("Incorrect input.")
 
 if choice == '2':
 
