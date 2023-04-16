@@ -9,6 +9,8 @@ WIDTH = 600
 HEIGHT = 600
 WHITE = (255,255,255)
 BLACK = (0,0,0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
 SCREEN = [WIDTH, HEIGHT]
 
 clock = pygame.time.Clock()
@@ -84,7 +86,6 @@ def drawAnswer(answer, answer_num):
     screen.blit(text, rect)
 
 def checkIfAnswerSelected(x, y):
-    print("{} {}".format(x, y))
     if x >= LEFT_ANSWER_START and x <= LEFT_ANSWER_END:
         if y >= TOP_ANSWER_START and y <= TOP_ANSWER_END:
             return 0
@@ -128,6 +129,29 @@ def quiz(question, answer0, answer1, answer2, answer3):
         pygame.display.update()
         clock.tick(5)
 
+def resultsScreen(title, definition, correct_answer, user_answer):
+    screen.fill(WHITE)
+    drawTitle(title)
+    drawQuestion(definition)
+
+    if correct_answer == user_answer:
+        text = TITLE_FONT.render("Correct!", True, GREEN, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, HEIGHT/2))
+        screen.blit(text, rect)
+    else:
+        text = TITLE_FONT.render("Incorrect!", True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)))
+        screen.blit(text, rect)
+        text = TITLE_FONT.render("You answered: " + user_answer, True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
+        screen.blit(text, rect)
+        text = TITLE_FONT.render("Correct answer: " + correct_answer, True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+100))
+        screen.blit(text, rect)
+
+    pygame.display.update()
+
+
 def game(chapterName, termList, definitionList):
     screen.fill(WHITE)
     drawTitle(chapterName)
@@ -150,8 +174,9 @@ def game(chapterName, termList, definitionList):
         # Process the answer
         pygame.time.delay(500)
         # Tell the user if it was right
+        resultsScreen(chapterName, definitionList[x], termList[x], choicePicker[answer])
         screen.fill(WHITE)
-        pygame.time.delay(1500)
+        pygame.time.delay(2000)
         drawTitle(chapterName)
     # TODO Show final results
     pygame.quit()
