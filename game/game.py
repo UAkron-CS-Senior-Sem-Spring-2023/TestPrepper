@@ -187,7 +187,7 @@ def finalResultsScreen(title, score, total_questions):
     pygame.display.update()
     pygame.time.delay(4000)
 
-def game(chapterName, termList, definitionList):
+def game(chapterName, termList, definitionList, dbcursor=None):
     screen.fill(WHITE)
     drawTitle(chapterName)
 
@@ -210,6 +210,8 @@ def game(chapterName, termList, definitionList):
         )
         # Process the answer
         if termList[x] == choicePicker[answer]:
+            if dbcursor is not None:
+                dbcursor.execute("UPDATE score SET correct = correct + 1 WHERE Term = '" + choicePicker[answer] + "';")
             score += 1
         pygame.time.delay(500)
         # Tell the user if it was right
