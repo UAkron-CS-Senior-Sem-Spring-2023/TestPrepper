@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import random
 
-from gesture_detection import GestureDetection, drawMarksOnImage, getXandYCoords
+from .gesture_detection import GestureDetection, drawMarksOnImage, getXandYCoords
 
 WIDTH = 600
 HEIGHT = 600
