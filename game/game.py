@@ -8,7 +8,7 @@ clock = pygame.time.Clock()
 pygame.init()  # Initialize pygame
 
 WIDTH = 600
-HEIGHT = 800
+HEIGHT = 600
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 SCREEN = [WIDTH, HEIGHT]
