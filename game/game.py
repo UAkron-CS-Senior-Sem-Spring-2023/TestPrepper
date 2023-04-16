@@ -83,11 +83,6 @@ def quiz(question, answer0, answer1, answer2, answer3):
 
         result = detecter.doesImageContainGesture('Open_Palm', image)
 
-        # image = np.zeros([image.shape[0],image.shape[1],3],dtype=np.uint8)
-        # image.fill(255)
-
-        # screen.fill([0,0,0])
-        # screen.blit(cvimage_to_pygame(image), (0,50))
         pygame.draw.rect(screen, WHITE, (0,CV_SCREEN_OFFSET,WIDTH,HEIGHT))
         
         drawAnswer(answer0, 0)
