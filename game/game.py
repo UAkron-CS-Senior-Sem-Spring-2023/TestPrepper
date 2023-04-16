@@ -2,7 +2,7 @@ import pygame
 import cv2
 import numpy as np
 
-from gesture_detection import GestureDetection, drawMarksOnImage
+from gesture_detection import GestureDetection, drawMarksOnImage, getXandYCoords
 
 clock = pygame.time.Clock()
 
@@ -11,7 +11,6 @@ HEIGHT = 800
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 SCREEN = [WIDTH, HEIGHT]
-POINTING_UP_QUOTE = "You're pointing up At: y="
 
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
@@ -40,7 +39,8 @@ if __name__ == "__main__":
         image.fill(255)
         
         if result != False:
-            image = drawMarksOnImage(image, result[1][0], result[1][1], result[1][2], POINTING_UP_QUOTE)
+            x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
+            image = drawMarksOnImage(image, x, y, result[1], "You're pointing up At: y=")
             print(result[1][1])
 
         screen.fill([0,0,0])
