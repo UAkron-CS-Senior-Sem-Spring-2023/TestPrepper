@@ -150,6 +150,30 @@ def resultsScreen(title, definition, correct_answer, user_answer):
 
     pygame.display.update()
 
+def finalResultsScreen(title, score, total_questions):
+    drawTitle(title)
+    text = TITLE_FONT.render("{}/{}".format(score, total_questions), True, BLACK, WHITE)
+    rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)))
+    screen.blit(text, rect)
+
+    if score/total_questions < 0.3:
+        text = TITLE_FONT.render("You might want to practice some more", True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
+        screen.blit(text, rect)
+    elif score/total_questions < 0.6:
+        text = TITLE_FONT.render("You're alright but could use some more practice", True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
+        screen.blit(text, rect)
+    elif score/total_questions < 0.8:
+        text = TITLE_FONT.render("You've done well!", True, BLACK, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
+        screen.blit(text, rect)
+    else:
+        text = TITLE_FONT.render("Good job!", True, GREEN, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
+        screen.blit(text, rect)
+    pygame.display.update()
+    pygame.time.delay(2000)
 
 def game(chapterName, termList, definitionList):
     screen.fill(WHITE)
@@ -182,7 +206,8 @@ def game(chapterName, termList, definitionList):
         pygame.time.delay(2000)
         drawTitle(chapterName)
         drawScore(score, num_questions)
-    # TODO Show final results
+
+    finalResultsScreen(chapterName, score, num_questions)
     pygame.quit()
         
 
