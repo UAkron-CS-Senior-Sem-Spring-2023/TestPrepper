@@ -5,6 +5,7 @@ import numpy as np
 from gesture_detection import GestureDetection, drawMarksOnImage, getXandYCoords
 
 clock = pygame.time.Clock()
+pygame.init()  # Initialize pygame
 
 WIDTH = 600
 HEIGHT = 800
@@ -20,7 +21,6 @@ if __name__ == "__main__":
     # Set game screen
     screen = pygame.display.set_mode(SCREEN)
 
-    pygame.init()  # Initialize pygame
     detecter = GestureDetection(0)
 
     game_exit = False
