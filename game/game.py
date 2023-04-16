@@ -11,6 +11,7 @@ HEIGHT = 800
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 SCREEN = [WIDTH, HEIGHT]
+POINTING_UP_QUOTE = "You're pointing up At: y="
 
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
@@ -39,7 +40,7 @@ if __name__ == "__main__":
         image.fill(255)
         
         if result != False:
-            image = drawMarksOnImage(image, result[1][0], result[1][1], result[1][2])
+            image = drawMarksOnImage(image, result[1][0], result[1][1], result[1][2], POINTING_UP_QUOTE)
             print(result[1][1])
 
         screen.fill([0,0,0])

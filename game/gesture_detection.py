@@ -16,7 +16,6 @@ VisionRunningMode = mp.tasks.vision.RunningMode
 MODEL = 'gesture_recognizer.task'
 MODEL_CONTENTS = open(MODEL, 'rb').read()
 FONT_COLOR = (0,0,0)
-POINTING_UP_QUOTE = "You're pointing up! At: "
 FONT = cv.FONT_HERSHEY_COMPLEX
 FONT_SCALE = 0.5
 THICKNESS = 1
@@ -75,7 +74,7 @@ class GestureDetection():
                     return (image, (top_finger_x, top_finger_y, landmarks))
         return False
     
-def drawMarksOnImage(image, top_finger_x, top_finger_y, landmarks):
+def drawMarksOnImage(image, top_finger_x, top_finger_y, landmarks, text):
     for mark in landmarks:
         x = int(mark.x * image.shape[1])
         y = int(mark.y * image.shape[0])
@@ -86,8 +85,8 @@ def drawMarksOnImage(image, top_finger_x, top_finger_y, landmarks):
             top_finger_y = y
             top_finger_x = x
 
-    pointing_len = cv.getTextSize(POINTING_UP_QUOTE, FONT, FONT_SCALE, 1)
-    cv.putText(image, POINTING_UP_QUOTE, (top_finger_x, top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
+    pointing_len = cv.getTextSize(text, FONT, FONT_SCALE, 1)
+    cv.putText(image, text, (top_finger_x, top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
     cv.putText(image, str(top_finger_y), (top_finger_x+pointing_len[0][0], top_finger_y), FONT, FONT_SCALE, FONT_COLOR, THICKNESS, cv.LINE_AA)
 
     return image
