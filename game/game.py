@@ -36,13 +36,14 @@ if __name__ == "__main__":
 
         image = np.zeros([image.shape[0],image.shape[1],3],dtype=np.uint8)
         image.fill(255)
+
+        screen.fill([0,0,0])
+        screen.blit(cvimage_to_pygame(image), (0,0))
         
         if result != False:
             x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
             image = drawMarksOnImage(image, x, y, result[1], "You're pointing up At: y=")
 
-        screen.fill([0,0,0])
-        screen.blit(cvimage_to_pygame(image), (0,0))
         pygame.display.update()
         clock.tick(15)
     
