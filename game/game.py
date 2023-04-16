@@ -45,16 +45,15 @@ def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
     return pygame.image.frombuffer(image.tobytes(), image.shape[1::-1], "BGR")
 
-def drawMainScreen():
-    pass
-
 def drawTitle(chapterName):
     text = TITLE_FONT.render(chapterName, True, BLACK, WHITE)
     rect = text.get_rect(center=(WIDTH/2, TITLE_OFFSET))
     screen.blit(text, rect)
 
-def drawFooter():
-    pass
+def drawScore(score, total_questions):
+    text = TITLE_FONT.render("{}/{}".format(score, total_questions), True, BLACK, WHITE)
+    rect = text.get_rect(center=(WIDTH-100, TITLE_OFFSET))
+    screen.blit(text, rect)
 
 def drawQuestion(question):
     text = FONT.render(question, True, BLACK, WHITE)
@@ -158,6 +157,8 @@ def game(chapterName, termList, definitionList):
 
     array=list(range(0,len(termList) + 0))
     random.shuffle(array)
+    num_questions = len(termList)
+    score = 0
     for x in array:
         choicePicker = [termList[x],termList[random.choice(array)],termList[random.choice(array)],termList[random.choice(array)]]
         while len(set(choicePicker)) != len(choicePicker):
@@ -172,12 +173,15 @@ def game(chapterName, termList, definitionList):
             choicePicker[3],
         )
         # Process the answer
+        if termList[x] == choicePicker[answer]:
+            score += 1
         pygame.time.delay(500)
         # Tell the user if it was right
         resultsScreen(chapterName, definitionList[x], termList[x], choicePicker[answer])
         screen.fill(WHITE)
         pygame.time.delay(2000)
         drawTitle(chapterName)
+        drawScore(score, num_questions)
     # TODO Show final results
     pygame.quit()
         
