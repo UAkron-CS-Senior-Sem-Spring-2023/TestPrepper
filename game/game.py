@@ -14,8 +14,7 @@ SCREEN = [WIDTH, HEIGHT]
 
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
-    # image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    return pygame.image.frombuffer(image.tostring(), image.shape[1::-1], "BGR")
+    return pygame.image.frombuffer(image.tobytes(), image.shape[1::-1], "BGR")
 
 if __name__ == "__main__":
     # Set game screen
