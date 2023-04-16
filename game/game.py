@@ -25,6 +25,19 @@ FONT = pygame.font.Font('freesansbold.ttf', 14)
 
 ANSWER_WIDTH = 100
 ANSWER_HEIGHT = 50
+ANSWER_USABLE_SPACE = HEIGHT-CV_SCREEN_OFFSET
+
+LEFT_ANSWER_START = (WIDTH/4)-(ANSWER_WIDTH/2)
+LEFT_ANSWER_END = LEFT_ANSWER_START+ANSWER_WIDTH
+
+RIGHT_ANSWER_START = (3*WIDTH/4)-(ANSWER_WIDTH/2)
+RIGHT_ANSWER_END = RIGHT_ANSWER_START+ANSWER_WIDTH
+
+TOP_ANSWER_START = CV_SCREEN_OFFSET+(ANSWER_USABLE_SPACE/4)-(ANSWER_HEIGHT/2)
+TOP_ANSWER_END = TOP_ANSWER_START+ANSWER_HEIGHT
+
+BOTTOM_ANSWER_START = CV_SCREEN_OFFSET+(3*ANSWER_USABLE_SPACE/4)-(ANSWER_HEIGHT/2)
+BOTTOM_ANSWER_END = BOTTOM_ANSWER_START+ANSWER_HEIGHT
 
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
@@ -47,26 +60,27 @@ def drawQuestion(question):
     screen.blit(text, rect)
 
 def drawAnswer(answer, answer_num):
-    usable_height = HEIGHT-CV_SCREEN_OFFSET
     text = FONT.render(answer, True, BLACK, WHITE)
-    if answer_num == 0 or answer_num == 2:
-        if answer_num == 0:
-            center = (WIDTH/4, CV_SCREEN_OFFSET+(usable_height/4))
-        else:
-            center = (WIDTH/4, CV_SCREEN_OFFSET+(3*usable_height/4))
-    elif answer_num == 1 or answer_num == 3:
-        if answer_num == 1:
-            center = (3*WIDTH/4, CV_SCREEN_OFFSET+(usable_height/4))
-        else:
-            center = (3*WIDTH/4, CV_SCREEN_OFFSET+(3*usable_height/4))
+    if answer_num == 0:
+        text_center = (LEFT_ANSWER_START+(ANSWER_WIDTH/2), TOP_ANSWER_START+(ANSWER_HEIGHT/2))
+        border_start = (LEFT_ANSWER_START, TOP_ANSWER_START)
+    elif answer_num == 1:
+        text_center = (LEFT_ANSWER_START+(ANSWER_WIDTH/2), BOTTOM_ANSWER_START+(ANSWER_HEIGHT/2))
+        border_start = (LEFT_ANSWER_START, BOTTOM_ANSWER_START)
+    elif answer_num == 2:
+        text_center = (RIGHT_ANSWER_START+(ANSWER_WIDTH/2), TOP_ANSWER_START+(ANSWER_HEIGHT/2))
+        border_start = (RIGHT_ANSWER_START, TOP_ANSWER_START)
+    else:
+        text_center = (RIGHT_ANSWER_START+(ANSWER_WIDTH/2), BOTTOM_ANSWER_START+(ANSWER_HEIGHT/2))
+        border_start = (RIGHT_ANSWER_START, BOTTOM_ANSWER_START)
 
     bordered_rect = pygame.draw.rect(
         screen,
         BLACK,
-        (center[0]-(ANSWER_WIDTH/2), center[1]-(ANSWER_HEIGHT/2), ANSWER_WIDTH, ANSWER_HEIGHT),
+        (border_start[0], border_start[1], ANSWER_WIDTH, ANSWER_HEIGHT),
         5
         )
-    rect = text.get_rect(center=center)
+    rect = text.get_rect(center=text_center)
     screen.blit(text, rect)
 
 def quiz(question, answer0, answer1, answer2, answer3):
