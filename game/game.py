@@ -42,7 +42,7 @@ if __name__ == "__main__":
         
         if result != False:
             x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
-            image = drawMarksOnImage(image, x, y, result[1], "You're pointing up At: y=")
+            pygame.draw.circle(screen, (0,0,0), (image.shape[1]-x,y), radius=10)
 
         pygame.display.update()
         clock.tick(15)
