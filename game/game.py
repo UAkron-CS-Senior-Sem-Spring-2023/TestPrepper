@@ -163,12 +163,18 @@ def finalResultsScreen(title, score, total_questions):
     screen.blit(text, rect)
 
     if score/total_questions < 0.3:
-        text = TITLE_FONT.render("You might want to practice some more", True, RED, WHITE)
+        text = TITLE_FONT.render("You might want to", True, RED, WHITE)
         rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
         screen.blit(text, rect)
+        text = TITLE_FONT.render("practice some more", True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+100))
+        screen.blit(text, rect)
     elif score/total_questions < 0.6:
-        text = TITLE_FONT.render("You're alright but could use some more practice", True, RED, WHITE)
+        text = TITLE_FONT.render("You're alright but could", True, RED, WHITE)
         rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
+        screen.blit(text, rect)
+        text = TITLE_FONT.render("use some more practice", True, RED, WHITE)
+        rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+100))
         screen.blit(text, rect)
     elif score/total_questions < 0.8:
         text = TITLE_FONT.render("You've done well!", True, BLACK, WHITE)
