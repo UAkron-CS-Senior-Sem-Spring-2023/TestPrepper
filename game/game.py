@@ -39,6 +39,11 @@ TOP_ANSWER_END = TOP_ANSWER_START+ANSWER_HEIGHT
 BOTTOM_ANSWER_START = CV_SCREEN_OFFSET+(3*ANSWER_USABLE_SPACE/4)-(ANSWER_HEIGHT/2)
 BOTTOM_ANSWER_END = BOTTOM_ANSWER_START+ANSWER_HEIGHT
 
+print(RIGHT_ANSWER_START)
+print(RIGHT_ANSWER_END)
+print(BOTTOM_ANSWER_START)
+print(BOTTOM_ANSWER_END)
+
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
     return pygame.image.frombuffer(image.tobytes(), image.shape[1::-1], "BGR")
@@ -83,6 +88,20 @@ def drawAnswer(answer, answer_num):
     rect = text.get_rect(center=text_center)
     screen.blit(text, rect)
 
+def checkIfAnswerSelected(x, y):
+    print("{} {}".format(x, y))
+    if x >= LEFT_ANSWER_START and x <= LEFT_ANSWER_END:
+        if y >= TOP_ANSWER_START and y <= TOP_ANSWER_END:
+            return 0
+        if y >= BOTTOM_ANSWER_START and y <= BOTTOM_ANSWER_END:
+            return 1
+    if x >= RIGHT_ANSWER_START and x <= RIGHT_ANSWER_END:
+        if y >= TOP_ANSWER_START and y <= TOP_ANSWER_END:
+            return 2
+        if y >= BOTTOM_ANSWER_START and y <= BOTTOM_ANSWER_END:
+            return 3
+    return -1
+
 def quiz(question, answer0, answer1, answer2, answer3):
     drawQuestion(question)
     game_exit = False
@@ -107,6 +126,9 @@ def quiz(question, answer0, answer1, answer2, answer3):
         if result != False:
             x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
             pygame.draw.circle(screen, BLACK, (image.shape[1]-x,y+CV_SCREEN_OFFSET), radius=10)
+            answer = checkIfAnswerSelected(image.shape[1]-x, y+CV_SCREEN_OFFSET)
+            if answer > 0:
+                return answer
 
         pygame.display.update()
         clock.tick(5)
@@ -123,19 +145,19 @@ def game(chapterName, termList, definitionList):
                 choicePicker = [termList[x],termList[random.choice(array)],termList[random.choice(array)],termList[random.choice(array)]]
         random.shuffle(choicePicker)
 
-        questionChoice = termList[x]
-        print("{}".format(definitionList[x]) + "?")
-        print("A.{}".format(choicePicker[0]))
-        print("B.{}".format(choicePicker[1]))
-        print("C.{}".format(choicePicker[2]))
-        print("D.{}".format(choicePicker[3]))
-        quiz(
+        # questionChoice = termList[x]
+        # print("{}".format(definitionList[x]) + "?")
+        # print("A.{}".format(choicePicker[0]))
+        # print("B.{}".format(choicePicker[1]))
+        # print("C.{}".format(choicePicker[2]))
+        # print("D.{}".format(choicePicker[3]))
+        print(quiz(
             definitionList[x],
             choicePicker[0],
             choicePicker[1],
             choicePicker[2],
             choicePicker[3],
-        )
+        ))
 
 if __name__ == "__main__":
     game(
