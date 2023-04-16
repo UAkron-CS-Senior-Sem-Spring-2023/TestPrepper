@@ -40,7 +40,6 @@ if __name__ == "__main__":
         if result != False:
             x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
             image = drawMarksOnImage(image, x, y, result[1], "You're pointing up At: y=")
-            print(result[1][1])
 
         screen.fill([0,0,0])
         screen.blit(cvimage_to_pygame(image), (0,0))
