@@ -128,7 +128,7 @@ def quiz(question, answer0, answer1, answer2, answer3):
         pygame.display.update()
         clock.tick(5)
 
-def drawResults(title, definition, correct_answer, user_answer):
+def resultsScreen(title, definition, correct_answer, user_answer):
     screen.fill(WHITE)
     drawTitle(title)
     drawQuestion(definition)
@@ -177,7 +177,7 @@ def game(chapterName, termList, definitionList):
             score += 1
         pygame.time.delay(500)
         # Tell the user if it was right
-        drawResults(chapterName, definitionList[x], termList[x], choicePicker[answer])
+        resultsScreen(chapterName, definitionList[x], termList[x], choicePicker[answer])
         screen.fill(WHITE)
         pygame.time.delay(2000)
         drawTitle(chapterName)
