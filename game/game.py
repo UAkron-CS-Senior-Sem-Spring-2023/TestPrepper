@@ -151,13 +151,22 @@ def game(chapterName, termList, definitionList):
         # print("B.{}".format(choicePicker[1]))
         # print("C.{}".format(choicePicker[2]))
         # print("D.{}".format(choicePicker[3]))
-        print(quiz(
+        answer = quiz(
             definitionList[x],
             choicePicker[0],
             choicePicker[1],
             choicePicker[2],
             choicePicker[3],
-        ))
+        )
+        # Process the answer
+        pygame.time.delay(500)
+        # Tell the user if it was right
+        screen.fill(WHITE)
+        pygame.time.delay(1500)
+        drawTitle(chapterName)
+    # TODO Show final results
+    pygame.quit()
+        
 
 if __name__ == "__main__":
     game(
