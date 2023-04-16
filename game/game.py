@@ -172,7 +172,7 @@ if __name__ == "__main__":
     game(
         'ComputerParts',
         ['CPU', 'RAM', 'SSD', 'Motherboard', 'Case', 'GPU'],
-        ['Processes all the instructions fed in by RAM', 'Volatile storage for quick access fed in by SSD', 'Large, slow storage to hold', 'Electronic housing for all the components', 'Physical housing for all the components', 'Powers what you see on the display']
+        ['Processes all the instructions fed in by RAM', 'Volatile storage for quick access fed in by SSD', 'Large, slow storage to hold information', 'Electronic housing for all the components', 'Physical housing for all the components', 'Powers what you see on the display']
         )
     input()
     exit(0)
