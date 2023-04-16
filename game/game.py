@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
         image = detecter.getImage()
 
-        result = detecter.doesImageContainGesture('Closed_Fist', image)
+        result = detecter.doesImageContainGesture('Open_Palm', image)
 
         image = np.zeros([image.shape[0],image.shape[1],3],dtype=np.uint8)
         image.fill(255)
