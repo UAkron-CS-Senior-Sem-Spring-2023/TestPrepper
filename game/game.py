@@ -122,7 +122,7 @@ def quiz(question, answer0, answer1, answer2, answer3):
             x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
             pygame.draw.circle(screen, BLACK, (image.shape[1]-x,y+CV_SCREEN_OFFSET), radius=10)
             answer = checkIfAnswerSelected(image.shape[1]-x, y+CV_SCREEN_OFFSET)
-            if answer > 0:
+            if answer >= 0:
                 return answer
 
         pygame.display.update()
