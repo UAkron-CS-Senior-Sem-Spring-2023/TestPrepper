@@ -185,7 +185,7 @@ def finalResultsScreen(title, score, total_questions):
         rect = text.get_rect(center=(WIDTH/2, (HEIGHT/2)+50))
         screen.blit(text, rect)
     pygame.display.update()
-    pygame.time.delay(2000)
+    pygame.time.delay(4000)
 
 def game(chapterName, termList, definitionList):
     screen.fill(WHITE)
