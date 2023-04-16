@@ -5,6 +5,7 @@ from mediapipe.python.solutions.drawing_styles import HandLandmark
 
 import numpy as np
 import cv2 as cv
+import os
 
 import time
 
@@ -13,8 +14,10 @@ GestureRecognizer = mp.tasks.vision.GestureRecognizer
 GestureRecognizerOptions = mp.tasks.vision.GestureRecognizerOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 
-MODEL = 'gesture_recognizer.task'
-MODEL_CONTENTS = open(MODEL, 'rb').read()
+# THIS_DIR = os.curdir()
+# MODEL = os.path.join(os.path.abspath(os.curdir) + os.sep + 'gesture_recognizer.task')
+# # MODEL = 'gesture_recognizer.task'
+# MODEL_CONTENTS = open(MODEL, 'rb').read()
 FONT_COLOR = (0,0,0)
 FONT = cv.FONT_HERSHEY_COMPLEX
 FONT_SCALE = 0.5
@@ -23,12 +26,14 @@ THICKNESS = 1
 class GestureDetection():
     def __init__(
             self,
-            camera_num:int
+            camera_num:int,
+            gesture_path:str
         ):
         
         self.cam = cv.VideoCapture(int(camera_num))
+        model_contents = open(gesture_path, 'rb').read()
         options = GestureRecognizerOptions(
-            base_options=BaseOptions(model_asset_buffer=MODEL_CONTENTS),
+            base_options=BaseOptions(model_asset_buffer=model_contents),
             running_mode=VisionRunningMode.VIDEO
         )
         self.recognizer = GestureRecognizer.create_from_options(options)

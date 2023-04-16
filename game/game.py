@@ -16,7 +16,7 @@ SCREEN = [WIDTH, HEIGHT]
 clock = pygame.time.Clock()
 pygame.init()  # Initialize pygame
 screen = pygame.display.set_mode(SCREEN)
-detecter = GestureDetection(0)
+detecter = None
 
 TITLE_OFFSET = 20
 QUESTION_OFFSET = 45
@@ -44,6 +44,10 @@ BOTTOM_ANSWER_END = BOTTOM_ANSWER_START+ANSWER_HEIGHT
 def cvimage_to_pygame(image):
     """Convert cvimage into a pygame image"""
     return pygame.image.frombuffer(image.tobytes(), image.shape[1::-1], "BGR")
+
+def setup(gesture_path):
+    global detecter
+    detecter = GestureDetection(0, gesture_path)
 
 def drawTitle(chapterName):
     text = TITLE_FONT.render(chapterName, True, BLACK, WHITE)
@@ -209,13 +213,15 @@ def game(chapterName, termList, definitionList):
 
     finalResultsScreen(chapterName, score, num_questions)
     pygame.quit()
+    return score
         
-
 if __name__ == "__main__":
-    game(
+    setup("./game/gesture_recognizer.task")
+    results = game(
         'ComputerParts',
         ['CPU', 'RAM', 'SSD', 'Motherboard', 'Case', 'GPU'],
         ['Processes all the instructions fed in by RAM', 'Volatile storage for quick access fed in by SSD', 'Large, slow storage to hold information', 'Electronic housing for all the components', 'Physical housing for all the components', 'Powers what you see on the display']
         )
+    print(results)
     exit(0)
     
