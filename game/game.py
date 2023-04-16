@@ -15,7 +15,7 @@ SCREEN = [WIDTH, HEIGHT]
 
 clock = pygame.time.Clock()
 pygame.init()  # Initialize pygame
-screen = pygame.display.set_mode(SCREEN)
+screen = None
 detecter = None
 
 TITLE_OFFSET = 20
@@ -47,7 +47,9 @@ def cvimage_to_pygame(image):
 
 def setup(gesture_path):
     global detecter
+    global screen
     detecter = GestureDetection(0, gesture_path)
+    screen = pygame.display.set_mode(SCREEN)
 
 def drawTitle(chapterName):
     text = TITLE_FONT.render(chapterName, True, BLACK, WHITE)
