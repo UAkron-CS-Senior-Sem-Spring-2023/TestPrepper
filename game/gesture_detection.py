@@ -14,10 +14,6 @@ GestureRecognizer = mp.tasks.vision.GestureRecognizer
 GestureRecognizerOptions = mp.tasks.vision.GestureRecognizerOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 
-# THIS_DIR = os.curdir()
-# MODEL = os.path.join(os.path.abspath(os.curdir) + os.sep + 'gesture_recognizer.task')
-# # MODEL = 'gesture_recognizer.task'
-# MODEL_CONTENTS = open(MODEL, 'rb').read()
 FONT_COLOR = (0,0,0)
 FONT = cv.FONT_HERSHEY_COMPLEX
 FONT_SCALE = 0.5
