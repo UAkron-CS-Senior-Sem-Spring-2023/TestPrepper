@@ -226,7 +226,10 @@ def game(chapterName, termList, definitionList, dbcursor=None):
     return score
         
 if __name__ == "__main__":
+    # If calling from the repo root dir
     setup("./game/gesture_recognizer.task")
+    # If calling from the game dir
+    # setup("gesture_recognizer.task")
     results = game(
         'ComputerParts',
         ['CPU', 'RAM', 'SSD', 'Motherboard', 'Case', 'GPU'],
