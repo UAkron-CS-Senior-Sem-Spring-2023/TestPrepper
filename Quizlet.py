@@ -4,6 +4,8 @@ import sqlite3
 import numpy as np
 import matplotlib.pyplot as plt
 
+from game.game import setup, game
+
 # Guide to new guide, review, or score graph
 print("Do you want to review a chapter or create a new review?\n"
         "0:Create a new chapter.\n"
@@ -59,7 +61,7 @@ if choice == '1':
     DBList = DBCursor.fetchall()
     termList = [''.join(i) for i in DBList]
 
-    testChoice = input("What kind of test do you want?\nMultiple choice:1\nQuestion/Answer:2\n")
+    testChoice = input("What kind of test do you want?\nMultiple choice:1\nQuestion/Answer:2\nInteractive Game:3\n")
     if testChoice == '1':
         # Develop Multiple choice quiz
         array=list(range(0,len(termList) + 0))
@@ -117,6 +119,9 @@ if choice == '1':
                     print("Incorrect.")
             except ValueError as ve:
                 print("Incorrect input.")
+    if testChoice == '3':
+        setup("./game/gesture_recognizer.task")
+        results = game(chapterStudy, termList, definitionList, DBCursor)
 
 if choice == '2':
 
