@@ -11,7 +11,7 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-SCREEN = [WIDTH, HEIGHT]
+SCREEN = [2*WIDTH, HEIGHT]
 
 clock = pygame.time.Clock()
 pygame.init()  # Initialize pygame
@@ -115,6 +115,9 @@ def quiz(question, answer0, answer1, answer2, answer3):
 
         image = detecter.getImage()
 
+        debug_image = np.zeros((image.shape[0], image.shape[1], 3), np.uint8)
+        debug_image.fill(255)
+
         result = detecter.doesImageContainGesture('Open_Palm', image)
 
         pygame.draw.rect(screen, WHITE, (0,CV_SCREEN_OFFSET,WIDTH,HEIGHT))
@@ -126,6 +129,8 @@ def quiz(question, answer0, answer1, answer2, answer3):
 
         if result != False:
             x, y = getXandYCoords(image.shape[1], image.shape[0], result[1])
+            drawMarksOnImage(debug_image, x, y, result[1], 'y=')
+            screen.blit(cvimage_to_pygame(debug_image), (WIDTH, 0))
             pygame.draw.circle(screen, BLACK, (image.shape[1]-x,y+CV_SCREEN_OFFSET), radius=10)
             answer = checkIfAnswerSelected(image.shape[1]-x, y+CV_SCREEN_OFFSET)
             if answer >= 0:
